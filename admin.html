@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Meghpushpam Admin</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin-body">
+  <section class="admin-login" id="loginView">
+    <form class="admin-login-card" id="loginForm">
+      <img src="images/logo.png" alt="Meghpushpam">
+      <h1>Website Admin</h1>
+      <div class="field"><label for="adminId">Admin ID</label><input id="adminId" autocomplete="username" required></div>
+      <div class="field" style="margin-top:14px"><label for="adminPassword">Password</label><input id="adminPassword" type="password" autocomplete="current-password" required></div>
+      <div class="admin-error" id="loginError">Invalid admin ID or password.</div>
+      <button class="btn btn-primary" type="submit" style="width:100%;margin-top:18px">Sign In</button>
+      <p style="text-align:center;font-size:.78rem;color:#7b8da4;margin:18px 0 0">Static demo admin — not suitable for public security.</p>
+    </form>
+  </section>
+
+  <div class="admin-shell hidden" id="adminShell">
+    <aside class="admin-sidebar">
+      <img src="images/logo.png" alt="Meghpushpam">
+      <nav class="admin-nav" aria-label="Admin navigation">
+        <button class="active" data-admin-tab="dashboard">Dashboard</button>
+        <button data-admin-tab="enquiries">Enquiries</button>
+        <button data-admin-tab="subscribers">Subscribers</button>
+        <button data-admin-tab="settings">Site Settings</button>
+        <button data-admin-tab="products">Products</button>
+        <button data-admin-tab="articles">Articles</button>
+        <button data-admin-tab="content">Page Content</button>
+        <button data-admin-tab="pages">Pages</button>
+        <button id="logoutButton">Logout</button>
+      </nav>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-topbar"><h1>Meghpushpam Control Panel</h1><a class="btn btn-blue-outline" href="index.html" target="_blank">View Website</a></div>
+
+      <section class="admin-panel active" data-admin-panel="dashboard">
+        <div class="admin-cards">
+          <div class="admin-card"><span>Enquiries</span><strong id="enquiryCount">0</strong></div>
+          <div class="admin-card"><span>Subscribers</span><strong id="subscriberCount">0</strong></div>
+          <div class="admin-card"><span>Products</span><strong id="productCount">7</strong></div>
+        </div>
+        <div class="feature-card">
+          <h3>Static Admin Notice</h3>
+          <p>Form submissions and content changes are stored only in this browser's localStorage. Connect an approved backend or database before publishing for real users.</p>
+        </div>
+      </section>
+
+      <section class="admin-panel" data-admin-panel="enquiries">
+        <h2 style="color:var(--navy)">Contact Enquiries</h2>
+        <div class="admin-actions" style="margin-bottom:14px"><button id="clearEnquiries">Clear Enquiries</button></div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Phone</th><th>Subject</th><th>Type</th><th>Message</th></tr></thead><tbody id="enquiryRows"></tbody></table></div>
+      </section>
+
+      <section class="admin-panel" data-admin-panel="subscribers">
+        <h2 style="color:var(--navy)">Newsletter Subscribers</h2>
+        <div class="admin-actions" style="margin-bottom:14px"><button id="clearSubscribers">Clear Subscribers</button></div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Date</th><th>Email</th></tr></thead><tbody id="subscriberRows"></tbody></table></div>
+      </section>
+
+      <section class="admin-panel" data-admin-panel="settings">
+        <h2 style="color:var(--navy)">Homepage Settings</h2>
+        <form id="settingsForm" class="form-grid">
+          <div class="field full"><label for="heroTitle">Hero Heading</label><input id="heroTitle" value="Discover a better way to live, grow &amp; thrive." required></div>
+          <div class="field full"><label for="heroText">Hero Supporting Text</label><textarea id="heroText" class="admin-textarea" required>Explore a thoughtful world of wellness, innovative lifestyle solutions, and meaningful opportunities with Meghpushpam.</textarea></div>
+          <div class="field"><label for="contactEmail">Public Email</label><input id="contactEmail" type="email" placeholder="hello@example.com"></div>
+          <div class="field"><label for="contactPhone">Public Phone</label><input id="contactPhone" placeholder="+91 ..."></div>
+          <div class="field full"><button class="btn btn-primary" type="submit">Save Website Settings</button><div class="form-message" id="settingsMessage"></div></div>
+        </form>
+      </section>
+
+      <section class="admin-panel" data-admin-panel="products">
+        <h2 style="color:var(--navy)">Product Information</h2>
+        <form id="productForm" class="form-grid">
+          <input type="hidden" id="productId">
+          <div class="field"><label for="productName">Product Name *</label><input id="productName" required></div>
+          <div class="field"><label for="productCategory">Category *</label><input id="productCategory" required></div>
+          <div class="field full"><label for="productDescription">Description</label><textarea id="productDescription" rows="3"></textarea></div>
+          <div class="field"><label for="productImage">Image URL / Path</label><input id="productImage" placeholder="images/banner-img5.png"></div>
+          <div class="field"><label for="productLink">Optional Detail Link</label><input id="productLink" placeholder="products/leveluk-k8.html"></div>
+          <div class="field full"><button class="btn btn-primary" type="submit" id="productSubmit">Add Product</button><button class="btn btn-blue-outline" type="button" id="cancelProductEdit" style="margin-left:8px">Cancel Edit</button></div>
+        </form>
+        <div class="admin-table-wrap" style="margin-top:20px"><table class="admin-table"><thead><tr><th>Product</th><th>Category</th><th>Image</th><th>Actions</th></tr></thead><tbody id="productRows"></tbody></table></div>
+      </section>
+
+      <section class="admin-panel" data-admin-panel="articles">
+        <h2 style="color:var(--navy)">News & Articles</h2>
+        <form id="articleForm" class="form-grid">
+          <input type="hidden" id="articleId">
+          <div class="field"><label for="articleTitle">Article Title *</label><input id="articleTitle" required></div>
+          <div class="field"><label for="articleCategory">Category</label><input id="articleCategory" value="Wellness"></div>
+          <div class="field full"><label for="articleSummary">Summary</label><textarea id="articleSummary" rows="3"></textarea></div>
+          <div class="field full"><label for="articleImage">Image URL / Path</label><input id="articleImage" placeholder="images/img-1.png"></div>
+          <div class="field full"><button class="btn btn-primary" type="submit" id="articleSubmit">Add Article</button><button class="btn btn-blue-outline" type="button" id="cancelArticleEdit" style="margin-left:8px">Cancel Edit</button></div>
+        </form>
+        <div class="admin-table-wrap" style="margin-top:20px"><table class="admin-table"><thead><tr><th>Title</th><th>Category</th><th>Actions</th></tr></thead><tbody id="articleRows"></tbody></table></div>
+      </section>
+
+      <section class="admin-panel" data-admin-panel="content">
+        <h2 style="color:var(--navy)">Common Page Content</h2>
+        <form id="contentForm" class="form-grid">
+          <div class="field"><label for="brandTagline">Brand Tagline</label><input id="brandTagline"></div>
+          <div class="field"><label for="publicPhone">Public Phone</label><input id="publicPhone"></div>
+          <div class="field full"><label for="brandDescription">Brand Description</label><textarea id="brandDescription" rows="4"></textarea></div>
+          <div class="field full"><label for="footerText">Footer Text</label><textarea id="footerText" rows="3"></textarea></div>
+          <div class="field full"><button class="btn btn-primary" type="submit">Save Page Content</button><div class="form-message" id="contentMessage"></div></div>
+        </form>
+      </section>
+
+      <section class="admin-panel" data-admin-panel="pages">
+        <h2 style="color:var(--navy)">Page Content Manager</h2>
+        <form id="pageForm" class="form-grid">
+          <div class="field full"><label for="pageKey">Select Page</label><select id="pageKey"><option value="about.html">About Us</option><option value="products.html">Products</option><option value="wellness.html">Wellness</option><option value="company.html">Our Company</option><option value="opportunity.html">Opportunities</option><option value="team.html">Our Team</option><option value="news.html">News &amp; Blog</option><option value="contact.html">Contact</option><option value="faq.html">FAQ</option><option value="privacy-policy.html">Privacy Policy</option><option value="terms.html">Terms &amp; Conditions</option></select></div>
+          <div class="field full"><label for="pageTitle">Page Heading</label><input id="pageTitle"></div>
+          <div class="field full"><label for="pageSubtitle">Page Subtitle / Intro</label><textarea id="pageSubtitle" rows="3"></textarea></div>
+          <div class="field full"><button class="btn btn-primary" type="submit">Save Page</button><button class="btn btn-blue-outline" id="deletePageContent" type="button" style="margin-left:8px">Restore Default</button><div class="form-message" id="pageMessage"></div></div>
+        </form>
+      </section>
+    </main>
+  </div>
+  <script src="js/admin.js"></script>
+</body>
+</html>
