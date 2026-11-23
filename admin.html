@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Meghpushpam Admin</title>
   <link rel="icon" href="images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20261123d">
 </head>
 <body class="admin-body">
   <section class="admin-login" id="loginView">
@@ -33,7 +33,7 @@
         <button data-admin-tab="products">Products</button>
         <button data-admin-tab="articles">Articles</button>
         <button data-admin-tab="content">Page Content</button>
-        <button data-admin-tab="pages">Pages</button>
+        <button data-admin-tab="pages">Site Control</button>
         <button id="logoutButton">Logout</button>
       </nav>
     </aside>
@@ -114,16 +114,35 @@
       </section>
 
       <section class="admin-panel" data-admin-panel="pages">
-        <h2 style="color:var(--navy)">Page Content Manager</h2>
+        <h2 style="color:var(--navy)">Site Control — Page Content Manager</h2>
         <form id="pageForm" class="form-grid">
-          <div class="field full"><label for="pageKey">Select Page</label><select id="pageKey"><option value="about.html">About Us</option><option value="products.html">Products</option><option value="wellness.html">Wellness</option><option value="company.html">Our Company</option><option value="opportunity.html">Opportunities</option><option value="team.html">Our Team</option><option value="news.html">News &amp; Blog</option><option value="contact.html">Contact</option><option value="faq.html">FAQ</option><option value="privacy-policy.html">Privacy Policy</option><option value="terms.html">Terms &amp; Conditions</option></select></div>
+          <div class="field full"><label for="pageKey">Select Page</label><select id="pageKey"><option value="about.html">About Us</option><option value="products.html">Products</option><option value="wellness.html">Wellness</option><option value="company.html">Our Company</option><option value="opportunity.html">Opportunities</option><option value="distributor.html">Distributor</option><option value="team.html">Our Team</option><option value="news.html">News &amp; Blog</option><option value="contact.html">Contact</option><option value="faq.html">FAQ</option><option value="privacy-policy.html">Privacy Policy</option><option value="terms.html">Terms &amp; Conditions</option></select></div>
           <div class="field full"><label for="pageTitle">Page Heading</label><input id="pageTitle"></div>
           <div class="field full"><label for="pageSubtitle">Page Subtitle / Intro</label><textarea id="pageSubtitle" rows="3"></textarea></div>
           <div class="field full"><button class="btn btn-primary" type="submit">Save Page</button><button class="btn btn-blue-outline" id="deletePageContent" type="button" style="margin-left:8px">Restore Default</button><div class="form-message" id="pageMessage"></div></div>
         </form>
+        <hr style="margin:30px 0;border:0;border-top:1px solid #dce8f4">
+        <h3 style="color:var(--navy)">Distributor Opportunity Details</h3>
+        <p>Edit the information shown on the Distributor page. Changes are saved in this browser and appear on the website after saving.</p>
+        <form id="distributorForm" class="form-grid">
+          <div class="field full"><label for="distributorOpportunityHeading">Opportunity Heading</label><input id="distributorOpportunityHeading"></div>
+          <div class="field full"><label for="distributorOpportunityText1">Opportunity Details</label><textarea id="distributorOpportunityText1" rows="3"></textarea></div>
+          <div class="field full"><label for="distributorOpportunityText2">Additional Details</label><textarea id="distributorOpportunityText2" rows="3"></textarea></div>
+          <div class="field full"><label for="distributorModelIntro">Business Model Introduction</label><textarea id="distributorModelIntro" rows="2"></textarea></div>
+          <div class="field"><label for="distributorStep1Title">Step 1 Heading</label><input id="distributorStep1Title"></div>
+          <div class="field"><label for="distributorStep1Text">Step 1 Details</label><textarea id="distributorStep1Text" rows="2"></textarea></div>
+          <div class="field"><label for="distributorStep2Title">Step 2 Heading</label><input id="distributorStep2Title"></div>
+          <div class="field"><label for="distributorStep2Text">Step 2 Details</label><textarea id="distributorStep2Text" rows="2"></textarea></div>
+          <div class="field"><label for="distributorStep3Title">Step 3 Heading</label><input id="distributorStep3Title"></div>
+          <div class="field"><label for="distributorStep3Text">Step 3 Details</label><textarea id="distributorStep3Text" rows="2"></textarea></div>
+          <div class="field full"><label for="distributorReviewHeading">Before You Join Heading</label><input id="distributorReviewHeading"></div>
+          <div class="field full"><label for="distributorReviewText">Before You Join Details</label><textarea id="distributorReviewText" rows="3"></textarea></div>
+          <div class="field full"><label for="distributorDisclaimer">Income / Terms Disclaimer</label><textarea id="distributorDisclaimer" rows="2"></textarea></div>
+          <div class="field full"><button class="btn btn-primary" type="submit">Save Distributor Details</button><div class="form-message" id="distributorMessage"></div></div>
+        </form>
       </section>
     </main>
   </div>
-  <script src="js/admin.js"></script>
+  <script src="js/admin.js?v=20261123a"></script>
 </body>
 </html>

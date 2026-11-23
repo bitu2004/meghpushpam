@@ -119,6 +119,40 @@ document.addEventListener("DOMContentLoaded", () => {
     if(remove&&confirm("Delete this article?")){write("meghpushpam_articles",getArticles().filter(article=>article.id!==remove.dataset.deleteArticle));renderDashboard();}
   });
 
+  const distributorDefaults = {
+    opportunityHeading:"Build product knowledge and customer relationships.",
+    opportunityText1:"Meghpushpam distributors introduce customers to the product range, share accurate product information and help interested people find the right information before making a decision.",
+    opportunityText2:"This is a relationship- and product-focused business opportunity. Participation should be based on verified product details, written terms and a clear understanding of any costs and responsibilities.",
+    modelIntro:"Confirm the official distributor agreement and current compensation plan before participating.",
+    step1Title:"Learn",
+    step1Text:"Understand product features, pricing, appropriate claims and the official distributor requirements.",
+    step2Title:"Share",
+    step2Text:"Provide interested customers with clear, accurate information and direct them to verified product resources.",
+    step3Title:"Support",
+    step3Text:"Respond to customer questions and provide follow-up in line with the official policies and your role.",
+    reviewHeading:"Review the details that matter.",
+    reviewText:"Ask for the current written terms, eligibility requirements, product pricing, any startup or ongoing costs, applicable refund policies and the official compensation plan. Take time to review them and decide whether the opportunity suits your circumstances.",
+    disclaimer:"Earnings are not guaranteed. Results depend on individual activity and the official terms; review all costs and conditions before participating."
+  };
+  const distributorFields = Object.keys(distributorDefaults).map(key => ({
+    key,
+    input:document.querySelector(`#distributor${key[0].toUpperCase()}${key.slice(1)}`)
+  }));
+  const loadDistributorContent = () => {
+    const saved = readObject("meghpushpam_distributor");
+    distributorFields.forEach(({key,input}) => { if (input) input.value = saved[key] ?? distributorDefaults[key]; });
+  };
+  document.querySelector("#distributorForm")?.addEventListener("submit", event => {
+    event.preventDefault();
+    const content = {};
+    distributorFields.forEach(({key,input}) => { content[key] = input.value.trim(); });
+    write("meghpushpam_distributor", content);
+    const message = document.querySelector("#distributorMessage");
+    message.className = "form-message success";
+    message.textContent = "Distributor details saved and updated on the Distributor page.";
+  });
+  loadDistributorContent();
+
   const pageKey=document.querySelector("#pageKey");
   const loadPage=()=>{
     try{

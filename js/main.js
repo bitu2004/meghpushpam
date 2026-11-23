@@ -32,6 +32,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   } catch (_) {}
 
+  try {
+    const distributorContent = JSON.parse(localStorage.getItem("meghpushpam_distributor") || "{}");
+    Object.entries(distributorContent).forEach(([key, value]) => {
+      const element = document.querySelector(`[data-distributor="${key}"]`);
+      if (element && typeof value === "string") element.textContent = value;
+    });
+  } catch (error) {
+    console.error("Could not load distributor page content.", error);
+  }
+  window.addEventListener("storage", event => {
+    if (event.key !== "meghpushpam_distributor") return;
+    try {
+      const updatedContent = JSON.parse(event.newValue || "{}");
+      Object.entries(updatedContent).forEach(([key, value]) => {
+        const element = document.querySelector(`[data-distributor="${key}"]`);
+        if (element && typeof value === "string") element.textContent = value;
+      });
+    } catch (error) {
+      console.error("Could not update distributor page content.", error);
+    }
+  });
+
   const heroTitle = document.querySelector("[data-site-hero-title]");
   const heroText = document.querySelector("[data-site-hero-text]");
   const heroImage = document.querySelector(".hero-visual > img");
@@ -90,14 +112,28 @@ document.addEventListener("DOMContentLoaded", () => {
     if (inSubfolder && header) header.classList.add("inner-header");
     const prefix = inSubfolder ? "../" : "";
     const active = path.split("/").pop() || "index.html";
+    const inProducts = active === "products.html" || (inSubfolder && path.includes("/products/"));
+    const inOpportunity = active === "opportunity.html";
+    const inDistributor = active === "distributor.html";
     navList.innerHTML = `
       <li><a class="nav-link${active === "index.html" ? " active" : ""}" href="${prefix}index.html">Home</a></li>
-      <li><a class="nav-link${active === "about.html" ? " active" : ""}" href="${prefix}about.html">About Us</a></li>
-      <li class="nav-item has-dropdown"><a class="nav-link${active === "products.html" || inSubfolder && path.includes("/products/") ? " active" : ""}" href="${prefix}products.html">Products <span aria-hidden="true">▾</span></a><div class="dropdown"><a href="${prefix}products.html">All Products</a><a href="${prefix}products/leveluk-k8.html">LEVELUK K8</a><a href="${prefix}products/anespa-dx.html">ANESPA DX</a><a href="${prefix}products/enaguarde.html">ENAGuarde</a></div></li>
-      <li><a class="nav-link${active === "wellness.html" ? " active" : ""}" href="${prefix}wellness.html">Wellness</a></li>
-      <li class="nav-item has-dropdown"><a class="nav-link${["company.html","opportunity.html","team.html"].includes(active) ? " active" : ""}" href="${prefix}company.html">Our Company <span aria-hidden="true">▾</span></a><div class="dropdown"><a href="${prefix}company.html">Company Overview</a><a href="${prefix}opportunity.html">Opportunities</a><a href="${prefix}team.html">Our Team</a></div></li>
-      <li class="nav-item has-dropdown"><a class="nav-link${["news.html"].includes(active) || inSubfolder && path.includes("/blog/") ? " active" : ""}" href="${prefix}news.html">Resources <span aria-hidden="true">▾</span></a><div class="dropdown"><a href="${prefix}news.html">News &amp; Blog</a><a href="${prefix}faq.html">FAQ</a></div></li>
-      <li><a class="nav-link${active === "contact.html" ? " active" : ""}" href="${prefix}contact.html">Contact</a></li>
+      <li><a class="nav-link${active === "about.html" ? " active" : ""}" href="${prefix}about.html">About</a></li>
+      <li class="nav-item has-dropdown products-dropdown">
+        <a class="nav-link${inProducts ? " active" : ""}" href="${prefix}products.html">Products <span class="dropdown-arrow" aria-hidden="true">⌄</span></a>
+        <div class="dropdown products-menu">
+          <a class="dropdown-featured" href="${prefix}products.html">
+            <span class="dropdown-featured-icon">MP</span>
+            <span><strong>Explore the Collection</strong><small>View all Meghpushpam products</small></span>
+          </a>
+          <span class="dropdown-label">Featured products</span>
+          <a href="${prefix}products/leveluk-k8.html"><span>01</span><strong>LEVELUK K8</strong></a>
+          <a href="${prefix}products/anespa-dx.html"><span>02</span><strong>ANESPA DX</strong></a>
+          <a href="${prefix}products/enaguarde.html"><span>03</span><strong>ENAGuarde</strong></a>
+        </div>
+      </li>
+      <li><a class="nav-link${active === "wellness.html" ? " active" : ""}" href="${prefix}wellness.html">Wellness Academy</a></li>
+      <li><a class="nav-link${inOpportunity ? " active" : ""}" href="${prefix}opportunity.html">Business Opportunity</a></li>
+      <li><a class="nav-link${inDistributor ? " active" : ""}" href="${prefix}distributor.html">Distributor</a></li>
       <li><a class="nav-link nav-cta" href="${prefix}contact.html">Get in Touch</a></li>`;
   }
 
