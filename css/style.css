@@ -300,6 +300,49 @@ h1,h2,h3,h4,p{margin-top:0}
   .hero-badge-two{right:2%;top:18px}
 }
 
+@media(max-width:760px){
+  .menu-toggle{position:relative;z-index:1003}
+  .nav-list{
+    top:0;
+    right:0;
+    bottom:0;
+    width:min(340px,88vw);
+    height:100vh;
+    height:100dvh;
+    padding:96px 20px max(24px,env(safe-area-inset-bottom));
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    z-index:1001;
+    transform:translateX(100%);
+    transition:transform .35s ease;
+  }
+  .nav-list.open{right:0;transform:translateX(0)}
+  .nav-list .nav-link{padding:12px;border-radius:10px}
+  .nav-list .nav-cta{margin:8px 0 0!important;text-align:center}
+  .header.inner-header .brand img{width:76px;height:76px}
+  .hero{
+    min-height:0;
+    padding:104px 0 36px;
+  }
+  .hero-layout{gap:4px}
+  .hero-layout .hero-content{padding-top:0}
+  .hero-layout .hero-content h1{
+    margin:12px 0 14px;
+    font-size:clamp(2rem,8vw,2.4rem);
+    line-height:1.04;
+  }
+  .hero-layout .hero-content p{font-size:1rem;line-height:1.55}
+  .hero-layout .hero-actions{gap:9px;margin-top:20px}
+  .hero-layout .hero-actions .btn{min-height:46px;padding:12px 18px}
+  .hero-visual{height:230px;margin:0}
+  .hero-visual>img{width:210px;height:220px}
+  .hero-badge{gap:6px;padding:8px 10px}
+  .hero-badge small{font-size:.58rem}
+  .hero-badge-one{left:2%;bottom:22px}
+  .hero-badge-two{right:0;top:10px}
+  .footer-grid{grid-template-columns:1fr;gap:28px}
+}
+
 /* Static website admin */
 .admin-body{background:#eef4fb;min-height:100vh}
 .admin-login{min-height:100vh;display:grid;place-items:center;padding:24px}
