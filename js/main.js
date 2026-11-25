@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (content.footerText) document.querySelectorAll("[data-site-footer]").forEach(el => el.textContent = content.footerText);
   } catch (_) {}
 
+  
   try {
     const pages = JSON.parse(localStorage.getItem("meghpushpam_pages") || "{}");
     const key = window.location.pathname.split("/").pop() || "index.html";

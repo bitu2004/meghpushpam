@@ -45,8 +45,8 @@ h1,h2,h3,h4,p{margin-top:0}
 .dropdown a:hover{background:var(--soft);color:var(--blue)}
 .dropdown-arrow{display:inline-block;margin-left:3px;font-size:.78rem;transition:transform .2s ease}
 .has-dropdown:hover .dropdown-arrow,.has-dropdown.open .dropdown-arrow{transform:rotate(180deg)}
-.products-dropdown>.nav-link{display:flex;flex-direction:column;align-items:center;gap:0;line-height:1.2}
-.products-dropdown>.nav-link .dropdown-arrow{margin:2px 0 0;line-height:.7}
+.products-dropdown>.nav-link{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:4px;line-height:1.2}
+.products-dropdown>.nav-link .dropdown-arrow{margin:0 0 0 4px;line-height:1}
 .products-menu{width:300px;left:-62px;padding:12px;border:1px solid rgba(7,91,255,.08);border-radius:18px;background:rgba(255,255,255,.98);backdrop-filter:blur(16px)}
 .products-menu:before{content:"";position:absolute;top:-7px;left:105px;width:14px;height:14px;background:white;transform:rotate(45deg);border-left:1px solid rgba(7,91,255,.06);border-top:1px solid rgba(7,91,255,.06)}
 .products-menu>a:not(.dropdown-featured){display:grid;grid-template-columns:32px 1fr;align-items:center;gap:10px;padding:10px 12px}
@@ -281,6 +281,7 @@ h1,h2,h3,h4,p{margin-top:0}
 .header.inner-header .nav-link.active{color:var(--electric)!important}
 .header.inner-header .nav-cta{background:var(--electric)!important;color:white!important}
 .header.inner-header .dropdown{top:44px}
+
 
 @media(max-width:1050px){
   .hero-layout{grid-template-columns:minmax(0,.95fr) minmax(260px,.75fr)}
