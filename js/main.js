@@ -62,19 +62,19 @@ document.addEventListener("DOMContentLoaded", () => {
     try { settings = JSON.parse(localStorage.getItem("meghpushpam_settings") || "{}"); } catch (_) {}
     const slides = [
       {
-        title: settings.heroTitle || "Discover a better way to <span>live, grow & thrive.</span>",
+        title: settings.heroTitle || "Live well, <span>Grow wealth. Go worldwide</span>",
         text: settings.heroText || "Explore a thoughtful world of wellness, innovative lifestyle solutions, and meaningful opportunities with Meghpushpam.",
         image: "images/banner-img5.png",
         alt: "Meghpushpam LEVELUK K8 wellness solution"
       },
       {
-        title: "Build <span>healthier daily habits.</span>",
+        title: "Live well, <span>Grow wealth. Go worldwide</span>",
         text: "Learn about hydration, balanced living, and practical choices that fit naturally into your everyday routine.",
         image: "images/company-img1.png",
         alt: "Balanced lifestyle with Meghpushpam"
       },
       {
-        title: "Grow with <span>purpose and clarity.</span>",
+        title: "Live well, <span>Grow wealth. Go worldwide</span>",
         text: "Explore trusted guidance, considered products, and an opportunity designed around learning and responsible participation.",
         image: "images/banner-img7.png",
         alt: "Meghpushpam ANESPA DX wellness solution"
@@ -121,14 +121,14 @@ document.addEventListener("DOMContentLoaded", () => {
       <li class="nav-item has-dropdown products-dropdown">
         <a class="nav-link${inProducts ? " active" : ""}" href="${prefix}products.html">Products <span class="dropdown-arrow" aria-hidden="true">⌄</span></a>
         <div class="dropdown products-menu">
+          <span class="dropdown-label">Featured products</span>
+          <a href="${prefix}products/leveluk-k8.html"><span>01</span><strong>Ionized Water Filtration</strong></a>
+          <a href="${prefix}products/anespa-dx.html"><span>02</span><strong>Bathing</strong></a>
+          <a href="${prefix}products.html"><span>03</span><strong>EMF Harmonizer</strong></a>
           <a class="dropdown-featured" href="${prefix}products.html">
             <span class="dropdown-featured-icon">MP</span>
             <span><strong>Explore the Collection</strong><small>View all Meghpushpam products</small></span>
           </a>
-          <span class="dropdown-label">Featured products</span>
-          <a href="${prefix}products/leveluk-k8.html"><span>01</span><strong>LEVELUK K8</strong></a>
-          <a href="${prefix}products/anespa-dx.html"><span>02</span><strong>ANESPA DX</strong></a>
-          <a href="${prefix}products/enaguarde.html"><span>03</span><strong>ENAGuarde</strong></a>
         </div>
       </li>
       <li><a class="nav-link${active === "wellness.html" ? " active" : ""}" href="${prefix}wellness.html">Wellness Academy</a></li>
