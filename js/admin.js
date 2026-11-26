@@ -33,17 +33,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const defaultProducts = [
     { id:"leveluk-jr-iv", name:"LEVELUK Jr IV", category:"Water ionizer", description:"An entry-level model in the LEVELUK range.", image:"images/banner-img2.png", link:"products/leveluk-jr-iv.html" },
-    { id:"leveluk-sd-501", name:"LEVELUK SD 501", category:"Water ionizer", description:"A model featured in the Meghpushpam collection.", image:"images/banner-img3.png", link:"products/leveluk-sd-501.html" },
+    { id:"leveluk-sd-501", name:"LeveLuk SD 501 / SD 501dx", category:"Water ionizer", description:"Explore the SD 501 model range and its available product information.", image:"images/banner-img3.png", link:"products/leveluk-sd-501.html" },
     { id:"leveluk-sd-501-platinum", name:"LEVELUK SD 501 Platinum", category:"Water ionizer", description:"The Platinum variant of the SD 501 range.", image:"images/banner-img4.png", link:"products/leveluk-sd-501-platinum.html" },
     { id:"leveluk-k8", name:"LEVELUK K8", category:"Water ionizer", description:"Explore this LEVELUK model and available information.", image:"images/banner-img5.png", link:"products/leveluk-k8.html" },
     { id:"leveluk-super-501", name:"LEVELUK Super 501", category:"Water ionizer", description:"A model in the Super 501 product family.", image:"images/banner-img6.png", link:"products/leveluk-super-501.html" },
     { id:"anespa-dx", name:"ANESPA DX", category:"Spa", description:"A lifestyle shower spa solution.", image:"images/banner-img7.png", link:"products/anespa-dx.html" },
-    { id:"enaguarde", name:"ENAGuarde", category:"Filtration", description:"Explore the ENAGuarde filtration overview.", image:"images/banner-img8.png", link:"products/enaguarde.html" }
+    { id:"enaguarde", name:"ENAGuarde", category:"Filtration", description:"Explore the ENAGuarde filtration overview.", image:"images/banner-img8.png", link:"products/enaguarde.html" },
+    { id:"emguarde", name:"emGuarde", category:"Wellness", description:"Ask a distributor for product information about emGuarde.", image:"images/banner-img8.png", link:"contact.html?product=emGuarde" }
   ];
   const getProducts = () => {
     const stored = localStorage.getItem("meghpushpam_products");
     if (stored === null) { write("meghpushpam_products", defaultProducts); return defaultProducts; }
-    try { return JSON.parse(stored); } catch (_) { return defaultProducts; }
+    try {
+      const products = JSON.parse(stored);
+      if (!Array.isArray(products)) return defaultProducts;
+      let migrated = false;
+      const sd501 = products.find(product => product.id === "leveluk-sd-501");
+      if (sd501 && sd501.name === "LEVELUK SD 501") {
+        sd501.name = "LeveLuk SD 501 / SD 501dx";
+        sd501.description = "Explore the SD 501 model range and its available product information.";
+        migrated = true;
+      }
+      if (!products.some(product => product.id === "emguarde" || String(product.name || "").toLowerCase() === "emguarde")) {
+        products.push(defaultProducts[defaultProducts.length - 1]);
+        migrated = true;
+      }
+      if (migrated) write("meghpushpam_products", products);
+      return products;
+    } catch (_) { return defaultProducts; }
   };
   const getArticles = () => read("meghpushpam_articles");
 

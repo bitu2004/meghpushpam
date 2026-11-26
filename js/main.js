@@ -1,4 +1,41 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const distributorPhones = {
+    // Add each distributor's referral ID and WhatsApp number here.
+  };
+  const params = new URLSearchParams(window.location.search);
+  const referralId = (params.get("ref") || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const referralPhone = String(distributorPhones[referralId] || "").replace(/\D/g, "");
+  const preserveReferralLinks = () => {
+    if (!referralId) return;
+    document.querySelectorAll('a[href]').forEach(link => {
+      const target = new URL(link.href, window.location.href);
+      if (target.origin === window.location.origin && !target.searchParams.has("ref")) {
+        target.searchParams.set("ref", referralId);
+        link.href = target.href;
+      }
+    });
+  };
+  preserveReferralLinks();
+  document.querySelectorAll("[data-demo-cta]").forEach(link => {
+    if (referralPhone.length >= 10 && referralPhone.length <= 15) {
+      const text = encodeURIComponent(`Hi, I would like to book a free water demo.${referralId ? ` I was referred by ${referralId}.` : ""}`);
+      link.href = `https://wa.me/${referralPhone}?text=${text}`;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    }
+  });
+  const enquiryType = document.querySelector("#demo-form select[name='type']");
+  if (enquiryType) {
+    if (params.get("type") === "demo") enquiryType.value = "Free water demo";
+    if (params.get("type") === "dtm") enquiryType.value = "Distributor Training Meeting";
+    const product = params.get("product");
+    if (product) {
+      enquiryType.value = "Product enquiry";
+      const subject = document.querySelector("#demo-form [name='subject']");
+      if (subject) subject.value = `Product enquiry: ${product}`;
+    }
+  }
+
   try {
     const settings = JSON.parse(localStorage.getItem("meghpushpam_settings") || "{}");
     if (settings.heroTitle) {
@@ -71,14 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         title: "Live well, <span>Grow wealth. Go worldwide</span>",
         text: "Learn about hydration, balanced living, and practical choices that fit naturally into your everyday routine.",
-        image: "images/company-img1.png",
-        alt: "Balanced lifestyle with Meghpushpam"
-      },
-      {
-        title: "Live well, <span>Grow wealth. Go worldwide</span>",
-        text: "Explore trusted guidance, considered products, and an opportunity designed around learning and responsible participation.",
-        image: "images/banner-img7.png",
-        alt: "Meghpushpam ANESPA DX wellness solution"
+        image: "images/banner-img3.png",
+        alt: "LeveLuk SD 501 water ionizer"
       }
     ];
     let slideIndex = 0;
@@ -181,7 +212,9 @@ document.addEventListener("DOMContentLoaded", () => {
     menuToggle.addEventListener("click", () => {
       const open = navList.classList.toggle("open");
       document.body.classList.toggle("menu-open", open);
+      menuToggle.textContent = open ? "×" : "☰";
       menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
     });
   }
   document.querySelectorAll(".has-dropdown > .nav-link").forEach(link => {
@@ -197,6 +230,10 @@ document.addEventListener("DOMContentLoaded", () => {
     link.addEventListener("click", () => {
       navList?.classList.remove("open");
       document.body.classList.remove("menu-open");
+      if (menuToggle) {
+        menuToggle.textContent = "☰";
+        menuToggle.setAttribute("aria-label", "Open navigation");
+      }
       menuToggle?.setAttribute("aria-expanded", "false");
     });
   });
@@ -220,6 +257,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  document.querySelectorAll("[data-water-tab]").forEach((tab, index, tabs) => {
+    tab.addEventListener("click", () => {
+      const panel = document.querySelector("#water-panel");
+      if (!panel) return;
+      tabs.forEach(item => item.setAttribute("aria-selected", String(item === tab)));
+      const title = panel.querySelector("[data-water-type-title]");
+      const ph = panel.querySelector("[data-water-type-ph]");
+      const pHValue = tab.textContent.match(/[\d.]+(?:–[\d.]+)?$/);
+      if (title) title.textContent = tab.dataset.waterTab;
+      if (ph) ph.textContent = `pH ${pHValue ? pHValue[0] : ""}`.trim();
+      panel.setAttribute("aria-labelledby", tab.id);
+    });
+    tab.addEventListener("keydown", event => {
+      if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+      event.preventDefault();
+      const direction = event.key === "ArrowRight" ? 1 : -1;
+      const next = tabs[(index + direction + tabs.length) % tabs.length];
+      next.focus();
+      next.click();
+    });
+  });
+
   const articleGrid = document.querySelector(".article-grid");
   if (articleGrid) {
     try {
@@ -240,7 +299,26 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const storedProducts = JSON.parse(localStorage.getItem("meghpushpam_products") || "null");
       if (storedProducts && Array.isArray(storedProducts)) {
-        productGrid.innerHTML = storedProducts.map(product => `
+        const productsToDisplay = storedProducts.slice();
+        const sd501 = productsToDisplay.find(product => product.id === "leveluk-sd-501");
+        if (sd501 && sd501.name === "LEVELUK SD 501") {
+          sd501.name = "LeveLuk SD 501 / SD 501dx";
+          sd501.description = "Explore the SD 501 model range and its available product information.";
+        }
+        if (!productsToDisplay.some(product => product.id === "emguarde" || String(product.name || "").toLowerCase() === "emguarde")) {
+          productsToDisplay.push({
+            id: "emguarde",
+            name: "emGuarde",
+            category: "Wellness",
+            description: "Ask a distributor for product information about emGuarde.",
+            image: "images/banner-img8.png",
+            link: "contact.html?product=emGuarde"
+          });
+        }
+        if (productsToDisplay.length !== storedProducts.length || productsToDisplay.some((product, index) => product.name !== storedProducts[index]?.name)) {
+          localStorage.setItem("meghpushpam_products", JSON.stringify(productsToDisplay));
+        }
+        productGrid.innerHTML = productsToDisplay.map(product => `
           <article class="product-card" data-category="${String(product.category||"").toLowerCase().replace(/[^a-z0-9]+/g,"-")}" data-name="${String(product.name||"").replace(/"/g,"&quot;")}">
             <a class="product-image" href="${product.link || "product.html"}"><img src="${product.image || "images/logo.png"}" alt="${String(product.name||"Product").replace(/"/g,"&quot;")}"></a>
             <div class="product-info"><span class="product-category">${String(product.category||"Product")}</span><h3>${String(product.name||"Unnamed Product")}</h3><p>${String(product.description||"Product information available on request.")}</p><a class="btn btn-blue-outline" href="${product.link || "product.html"}">View Details</a></div>
@@ -277,6 +355,29 @@ document.addEventListener("DOMContentLoaded", () => {
           message.className = "form-message error";
           message.textContent = "Please complete the required fields before submitting.";
         }
+        return;
+      }
+      if (form.hasAttribute("data-whatsapp-enquiry")) {
+        if (referralPhone.length < 10 || referralPhone.length > 15) {
+          if (message) {
+            message.className = "form-message error";
+            message.textContent = referralId
+              ? `WhatsApp contact details are not configured for referral "${referralId}". Please contact the website owner.`
+              : "Use your distributor's personal referral link to send this demo request directly on WhatsApp.";
+          }
+          return;
+        }
+        const values = Object.fromEntries(new FormData(form).entries());
+        const messageText = [
+          "Free water demo enquiry",
+          `Name: ${values.name || ""}`,
+          `Email: ${values.email || ""}`,
+          `Phone: ${values.phone || ""}`,
+          `Enquiry: ${values.type || ""}`,
+          `Message: ${values.message || ""}`,
+          `Referral: ${referralId}`
+        ].join("\n");
+        window.location.href = `https://wa.me/${referralPhone}?text=${encodeURIComponent(messageText)}`;
         return;
       }
       if (message) {
@@ -324,4 +425,5 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+  preserveReferralLinks();
 });

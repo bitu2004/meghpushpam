@@ -63,7 +63,7 @@ h1,h2,h3,h4,p{margin-top:0}
 .header:not(.scrolled) .nav-cta{background:white!important}
 .menu-toggle{display:none;width:46px;height:46px;border:0;border-radius:50%;background:white;color:var(--navy);font-size:1.35rem}
 .progress{position:fixed;z-index:1200;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--electric));transition:width .1s}
-.hero{min-height:720px;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(115deg,rgba(6,21,47,.96) 0%,rgba(0,59,206,.82) 58%,rgba(0,217,245,.48) 100%),url("../images/hero-bg.jpg") center/cover,no-repeat}
+.hero{min-height:720px;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(115deg,rgba(6,21,47,.96) 0%,rgba(0,59,206,.82) 58%,rgba(0,217,245,.48) 100%)}
 .hero:before{content:none}
 .hero-orb{display:none}
 .hero-orb.one{width:360px;height:360px;right:-100px;top:-80px}
@@ -305,12 +305,37 @@ h1,h2,h3,h4,p{margin-top:0}
 }
 
 @media(max-width:760px){
-  .menu-toggle{position:relative;z-index:1003}
+  .header{min-height:114px}
+  .header.scrolled{min-height:74px}
+  .nav-wrap{position:relative;min-height:98px}
+  .header.scrolled .nav-wrap{min-height:64px}
+  .menu-toggle{
+    position:absolute;
+    right:0;
+    top:50%;
+    z-index:1003;
+    transform:translateY(-50%);
+    flex:0 0 46px;
+  }
+  body.menu-open .menu-toggle{
+    position:fixed;
+    top:14px;
+    right:14px;
+    transform:none;
+    width:44px;
+    height:44px;
+    background:var(--navy);
+    color:white;
+    box-shadow:0 8px 24px rgba(6,21,47,.22);
+    font-size:1.55rem;
+  }
+  .brand{display:flex;align-items:center}
+  .header.scrolled .brand img{width:88px;height:88px}
   .nav-list{
     top:0;
     right:0;
     bottom:0;
-    width:min(340px,88vw);
+    width:min(320px,84vw);
     height:100vh;
     height:100dvh;
     padding:96px 20px max(24px,env(safe-area-inset-bottom));
@@ -321,6 +346,17 @@ h1,h2,h3,h4,p{margin-top:0}
     transition:transform .35s ease;
   }
   .nav-list.open{right:0;transform:translateX(0)}
+  .nav-list.open:before{
+    content:"Meghpushpam";
+    display:block;
+    position:absolute;
+    top:28px;
+    left:20px;
+    color:var(--navy);
+    font-family:"Outfit",sans-serif;
+    font-size:1.1rem;
+    font-weight:800;
+  }
   .nav-list .nav-link{padding:12px;border-radius:10px}
   .nav-list .nav-cta{margin:8px 0 0!important;text-align:center}
   .header.inner-header .brand img{width:88px;height:88px}
@@ -377,3 +413,36 @@ h1,h2,h3,h4,p{margin-top:0}
 .admin-textarea{min-height:100px}
 .hidden{display:none!important}
 @media(max-width:760px){.admin-shell{grid-template-columns:1fr}.admin-sidebar{position:sticky;top:0;z-index:20}.admin-sidebar img{display:none}.admin-nav{grid-template-columns:repeat(3,1fr)}.admin-nav button{text-align:center;font-size:.72rem;padding:9px 5px}.admin-main{padding:18px 12px}.admin-cards{grid-template-columns:1fr}.admin-topbar{align-items:flex-start;gap:12px}}
+
+main .section p{color:#46566c;font-size:1.04rem}
+main .section .wellness-item p{color:#d5e6f7}
+.product-image{height:340px}
+.product-image img{width:94%;height:94%}
+.water-properties{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:28px}
+.water-properties .feature-card{position:relative;padding-top:68px}
+.water-property-number{position:absolute;top:22px;left:30px;color:var(--electric);font-family:"Outfit",sans-serif;font-size:1.2rem;font-weight:800}
+.water-type-explorer{display:grid;grid-template-columns:minmax(230px,.75fr) 1.25fr;gap:24px;padding:24px;border-radius:22px;background:var(--navy);color:white}
+.water-type-tabs{display:grid;gap:8px}
+.water-type-tabs button{min-height:54px;padding:12px 16px;border:1px solid rgba(255,255,255,.17);border-radius:12px;background:rgba(255,255,255,.06);color:#e8f2ff;text-align:left;font-size:1rem;font-weight:800;cursor:pointer;transition:background .2s ease,border-color .2s ease}
+.water-type-tabs button:hover,.water-type-tabs button[aria-selected="true"]{border-color:var(--cyan);background:rgba(0,217,245,.14);color:white}
+.water-type-tabs button:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+.water-type-panel{min-height:100%;display:flex;flex-direction:column;justify-content:center;padding:35px;border:1px solid rgba(255,255,255,.14);border-radius:18px;background:linear-gradient(145deg,rgba(7,91,255,.32),rgba(0,217,245,.08))}
+.water-type-panel .eyebrow{color:#aeefff}
+.water-type-panel h3{margin:18px 0 8px;color:white;font-family:"Outfit",sans-serif;font-size:clamp(1.8rem,4vw,2.7rem)}
+.water-type-panel p{margin:0;color:#e3efff!important;font-size:1.25rem!important;font-weight:800}
+.hero-visual{top:42px}
+.hero-visual>img{object-fit:cover;object-position:70% center;border-radius:20px}
+.product-image img[src$="banner-img2.png"]{object-fit:cover;object-position:30% center}
+.product-image img[src$="banner-img3.png"]{object-fit:cover;object-position:72% center}
+.product-image img[src$="banner-img4.png"]{object-fit:cover;object-position:31% center}
+.product-image img[src$="banner-img5.png"]{object-fit:cover;object-position:70% center}
+.product-image img[src$="banner-img7.png"]{object-fit:cover;object-position:50% center}
+@media(max-width:760px){
+  .hero-visual{top:0}
+  .water-properties{grid-template-columns:1fr}
+  .water-type-explorer{grid-template-columns:1fr;padding:14px}
+  .water-type-tabs{grid-template-columns:1fr 1fr}
+  .water-type-tabs button{font-size:.9rem}
+  .water-type-panel{min-height:190px;padding:24px}
+  .cta-band .btn-outline{margin:12px 0 0!important}
+}
